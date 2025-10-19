@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - Legend Craft</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000; color: #ffffff; line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: rgba(0,0,0,0.95); padding: 1rem; position: fixed; width: 100%; top: 0;
+            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
+            z-index: 1000; backdrop-filter: blur(10px);
+        }
+        
+        .user-info {
+            display: flex; align-items: center; gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 40px; height: 40px; background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; color: white;
+        }
+        
+        .user-details { display: flex; flex-direction: column; }
+        .user-name { font-weight: 600; color: #60A5FA; }
+        .user-status { font-size: 0.8rem; color: #9ca3af; }
+        
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo-circle {
+            width: 40px; height: 40px; background: linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1rem; color: white;
+        }
+        .logo-text .main {
+            font-size: 1.4rem; font-weight: 900;
+            background: linear-gradient(135deg, #60A5FA, #A855F7, #EC4899);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        
+        .dashboard {
+            padding: 100px 1rem 2rem; max-width: 1200px; margin: 0 auto;
+        }
+        
+        .welcome-section {
+            text-align: center; margin-bottom: 3rem;
+        }
+        
+        .welcome-section h1 {
+            font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem;
+            background: linear-gradient(135deg, #60A5FA, #A855F7, #EC4899);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        
+        .welcome-section p {
+            font-size: 1.2rem; color: #d1d5db; max-width: 600px; margin: 0 auto;
+        }
+        
+        .cards-grid {
+            display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2rem;
+        }
+        
+        .card {
+            background: rgba(30, 41, 59, 0.3); backdrop-filter: blur(15px);
+            border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 2rem;
+            text-align: center; transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px); border-color: #8B5CF6;
+            background: rgba(30, 41, 59, 0.5);
+        }
+        
+        .card-icon {
+            width: 80px; height: 80px; background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+            border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem; font-size: 2rem; color: white;
+        }
+        
+        .card h3 {
+            font-size: 1.4rem; margin-bottom: 1rem; color: #60A5FA; font-weight: 700;
+        }
+        
+        .card p {
+            color: #d1d5db; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;
+        }
+        
+        .coming-soon {
+            background: rgba(59, 130, 246, 0.1); color: #60A5FA; padding: 8px 16px;
+            border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: inline-block;
+        }
+        
+        .logout-btn {
+            background: transparent; color: #EF4444; border: 1.5px solid #EF4444;
+            padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; margin-left: 10px;
+        }
+        
+        .logout-btn:hover {
+            background: #EF4444; color: white;
+        }
+        
+        @media (max-width: 480px) {
+            .header { padding: 0.8rem; }
+            .logo-text .main { font-size: 1.2rem; }
+            .welcome-section h1 { font-size: 2rem; }
+            .dashboard { padding: 90px 1rem 1rem; }
+            .card { padding: 1.5rem; }
+        }
+        
+        @media (min-width: 768px) {
+            .cards-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+            .header { padding: 1rem 2rem; }
+            .logo-text .main { font-size: 1.8rem; }
+            .welcome-section h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر -->
+    <header class="header">
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div class="user-details">
+                <div class="user-name" id="userName">مستخدم</div>
+                <div class="user-status">🟢 متصل</div>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                تسجيل خروج
+            </button>
+        </div>
+
+        <div class="logo">
+            <div class="logo-circle">LC</div>
+            <div class="logo-text">
+                <div class="main">Legend Craft</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="dashboard">
+        <section class="welcome-section">
+            <h1>مرحباً بك في لوحة التحكم</h1>
+            <p>هنا يمكنك إدارة حسابك ومشاهدة إحصائياتك والتحكم في إعداداتك</p>
+        </section>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>الإحصائيات</h3>
+                <p>تابع إحصائياتك وأدائك في السيرفر</p>
+                <div class="coming-soon">قريباً سيتم إضافة الإحصائيات</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <h3>المتجر</h3>
+                <p>اشتري منتجات حصرية لتحسين تجربتك</p>
+                <div class="coming-soon">قريباً سيتم فتح المتجر</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <h3>الإعدادات</h3>
+                <p>عدل على إعدادات حسابك الشخصية</p>
+                <div class="coming-soon">قريباً سيتم تفعيل الإعدادات</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>المجتمع</h3>
+                <p>تفاعل مع أعضاء المجتمع الآخرين</p>
+                <div class="coming-soon">قريباً سيتم إضافة المجتمع</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // التحقق من تسجيل الدخول
+        function checkAuth() {
+            const userId = localStorage.getItem('user_id');
+            const username = localStorage.getItem('username');
+            
+            if (!userId || !username) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // عرض بيانات المستخدم
+            document.getElementById('userName').textContent = username;
+            document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            localStorage.removeItem('user_id');
+            localStorage.removeItem('username');
+            localStorage.removeItem('discord_id');
+            window.location.href = 'index.html';
+        }
+
+        // تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+        });
+    </script>
+</body>
+</html>

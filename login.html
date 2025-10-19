@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - Legend Craft</title>
+    
+    <!-- أيقونات -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-container {
+            background: linear-gradient(135deg, #000000, #1e1b4b, #000000);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo-circle {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: white;
+            margin: 0 auto 1rem;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #60A5FA, #A855F7, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            color: #60A5FA;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .form-input {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #374151;
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: #6B7280;
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .help-text {
+            text-align: center;
+            color: #9CA3AF;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .help-link {
+            color: #60A5FA;
+            text-decoration: none;
+        }
+        
+        .help-link:hover {
+            text-decoration: underline;
+        }
+        
+        .message {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .message.success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #16A34A;
+            color: #4ADE80;
+        }
+        
+        .message.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #DC2626;
+            color: #F87171;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            color: #9CA3AF;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            color: #60A5FA;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- زر العودة -->
+        <button class="back-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <!-- الشعار -->
+        <div class="logo">
+            <div class="logo-circle">LC</div>
+            <h1>Legend Craft</h1>
+        </div>
+        
+        <!-- رسائل التنبيه -->
+        <div class="message" id="message"></div>
+        
+        <!-- نموذج التسجيل -->
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <label for="username">اسم المستخدم</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    class="form-input" 
+                    placeholder="اختر اسمًا فريدًا"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="loginCode">كود الدخول</label>
+                <input 
+                    type="text" 
+                    id="loginCode" 
+                    class="form-input" 
+                    placeholder="أدخل الكود من البوت"
+                    required
+                >
+            </div>
+            
+            <button type="submit" class="login-btn" id="submitBtn">
+                <i class="fas fa-sign-in-alt"></i>
+                تسجيل الدخول
+            </button>
+        </form>
+        
+        <!-- نص المساعدة -->
+        <div class="help-text">
+            ما عندك كود؟ 
+            <a href="#" class="help-link" onclick="showHelp()">اطلب من البوت: -كودي</a>
+        </div>
+    </div>
+
+    <!-- سكريبت سوبابيس -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // إعداد سوبابيس
+        const supabaseUrl = 'https://zcrlupiiuugveauejktn.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpjcmx1cGlpdXVndmVhdWVqa3RuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA3ODI3NjgsImV4cCI6MjA3NjM1ODc2OH0.EuxXDxsq3Uid35Z7pqrYaW-ze06BgEeRdj0hZWk1KkA';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // عناصر DOM
+        const loginForm = document.getElementById('loginForm');
+        const messageDiv = document.getElementById('message');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // عرض الرسالة
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+
+        // إخفاء الرسالة
+        function hideMessage() {
+            messageDiv.style.display = 'none';
+        }
+
+        // عرض مساعدة الكود
+        function showHelp() {
+            showMessage('💡 اكتب في بوت الديسكورد: -كودي', 'success');
+        }
+
+        // التحقق من صحة البيانات
+        function validateForm(username, loginCode) {
+            if (username.length < 3) {
+                showMessage('❌ اسم المستخدم يجب أن يكون 3 أحرف على الأقل', 'error');
+                return false;
+            }
+            
+            if (loginCode.length < 6) {
+                showMessage('❌ كود الدخول غير صحيح', 'error');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // تسجيل الدخول
+        async function loginUser(username, loginCode) {
+            try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التسجيل...';
+
+                // البحث عن المستخدم بالكود
+                const { data: users, error } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('login_code', loginCode.toUpperCase())
+                    .single();
+
+                if (error) {
+                    throw new Error('الكود غير صحيح أو منتهي الصلاحية');
+                }
+
+                if (!users) {
+                    throw new Error('الكود غير صحيح');
+                }
+
+                // التحقق من أن اسم المستخدم غير مستخدم
+                const { data: existingUser } = await supabase
+                    .from('users')
+                    .select('site_username')
+                    .eq('site_username', username)
+                    .single();
+
+                if (existingUser) {
+                    throw new Error('اسم المستخدم مستعمل بالفعل، اختر اسمًا آخر');
+                }
+
+                // تحديث بيانات المستخدم
+                const { error: updateError } = await supabase
+                    .from('users')
+                    .update({ 
+                        site_username: username,
+                        last_login: new Date().toISOString()
+                    })
+                    .eq('id', users.id);
+
+                if (updateError) {
+                    throw new Error('حدث خطأ في تحديث البيانات');
+                }
+
+                // حفظ بيانات الجلسة
+                localStorage.setItem('user_id', users.id);
+                localStorage.setItem('username', username);
+                localStorage.setItem('discord_id', users.discord_id);
+
+                showMessage('✅ تم تسجيل الدخول بنجاح!', 'success');
+                
+                // الانتقال للواجهة الرئيسية بعد ثانيتين
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+
+            } catch (error) {
+                showMessage(`❌ ${error.message}`, 'error');
+                loginForm.classList.add('shake');
+                setTimeout(() => loginForm.classList.remove('shake'), 300);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> تسجيل الدخول';
+            }
+        }
+
+        // حدث إرسال النموذج
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const loginCode = document.getElementById('loginCode').value.trim();
+            
+            hideMessage();
+            
+            if (validateForm(username, loginCode)) {
+                await loginUser(username, loginCode);
+            }
+        });
+
+        // إدخال تلقائي للأحرف الكبيرة
+        document.getElementById('loginCode').addEventListener('input', function(e) {
+            this.value = this.value.toUpperCase();
+        });
+    </script>
+</body>
+</html>
